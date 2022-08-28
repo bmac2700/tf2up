@@ -1,0 +1,18 @@
+[package]
+name = "tf2up"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[profile.release]
+lto = true
+panic = "abort"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[target.'cfg(windows)'.dependencies]
+winapi = { version = "0.3", features = ["consoleapi", "libloaderapi", "processthreadsapi", "winuser", "handleapi", "wincon"] }
+
+[dependencies]
