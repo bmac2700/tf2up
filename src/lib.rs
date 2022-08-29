@@ -13,9 +13,9 @@ use winapi::{
 };
 
 mod cheat;
+mod hooks;
 mod interfaces;
 mod math;
-mod hooks;
 
 unsafe extern "system" fn dllmain_wrapped(module: *mut c_void) -> u32 {
     let res = std::panic::catch_unwind(|| {

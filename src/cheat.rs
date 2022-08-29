@@ -1,5 +1,18 @@
-use crate::interfaces::{get_interface, base_client::IBaseClient, client_mode::IClientMode, engine_client::IEngineClient };
+use crate::hooks::detour::hook_x86;
 use crate::hooks::get_virtual;
+use crate::interfaces::{
+    base_client::IBaseClient, client_mode::IClientMode, engine_client::IEngineClient, get_interface,
+};
+
+#[no_mangle]
+pub extern "thiscall" fn create_move_hook(
+    caller_class: *const u8,
+    input_sample_frametime: f32,
+    user_cmd: *const u8,
+) {
+    println!("Called create_move_hook");
+    loop {}
+}
 
 pub fn start() {
     let base_client_interface: IBaseClient =
@@ -17,6 +30,16 @@ pub fn start() {
     println!("create_move function: {:x?}", unsafe {
         get_virtual(client_mode_interface.interface_address, 21)
     });
+
+    println!("{:x?}", create_move_hook as *const u8);
+
+    unsafe {
+        hook_x86(
+            get_virtual(client_mode_interface.interface_address, 21),
+            6,
+            create_move_hook as *const u8,
+        );
+    }
 
     let mut view_angle = engine_client_interface.get_view_angle();
 

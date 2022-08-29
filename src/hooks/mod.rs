@@ -6,3 +6,5 @@ pub unsafe fn get_virtual(class: *const u8, index: usize) -> *const u8 {
 
     return virtual_function_address as *const u8;
 }
+
+pub mod detour;
