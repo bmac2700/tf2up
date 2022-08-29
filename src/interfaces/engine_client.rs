@@ -1,14 +1,13 @@
 use crate::math::vector3::Vec3;
 
+#[derive(Debug)]
 pub struct IEngineClient {
-    interface_address: *const u8,
+    pub interface_address: *const u8,
 }
 
 impl IEngineClient {
     pub fn new(interface_address: *const u8) -> Self {
-        Self {
-            interface_address,
-        }
+        Self { interface_address }
     }
 
     pub fn is_connected(&self) -> u8 {
@@ -40,7 +39,7 @@ impl IEngineClient {
         let func: FunctionSignature = unsafe { std::mem::transmute(function_address as *const u8) };
 
         func(self.interface_address, &mut width, &mut height);
-        
+
         return (width, height);
     }
 
@@ -48,7 +47,7 @@ impl IEngineClient {
         let mut view_angle = Vec3 {
             x: 0f32,
             y: 0f32,
-            z: 0f32
+            z: 0f32,
         };
 
         type FunctionSignature = extern "thiscall" fn(*const u8, &mut Vec3);

@@ -1,7 +1,12 @@
+use std::ffi::CString;
+
 use winapi::um::libloaderapi::{GetModuleHandleA, GetProcAddress};
 
 pub fn get_interface(module_name: String, interface_name: String) -> *const u8 {
-    let module_handle = unsafe { GetModuleHandleA("engine.dll\0".as_ptr() as _) };
+    let module_name = CString::new(module_name).unwrap();
+    let interface_name = CString::new(interface_name).unwrap();
+
+    let module_handle = unsafe { GetModuleHandleA(module_name.as_ptr() as _) };
     let create_interface_address =
         unsafe { GetProcAddress(module_handle, "CreateInterface\0".as_ptr() as _) };
 
@@ -11,9 +16,11 @@ pub fn get_interface(module_name: String, interface_name: String) -> *const u8 {
 
     let return_value: i32 = 1;
 
-    let x = func("VEngineClient014\0".as_ptr() as _, &return_value);
+    let x = func(interface_name.as_ptr() as _, &return_value);
 
     return x;
 }
 
+pub mod base_client;
+pub mod client_mode;
 pub mod engine_client;
