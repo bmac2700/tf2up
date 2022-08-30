@@ -59,9 +59,11 @@ pub extern "thiscall" fn create_move_hook(
 
     let cmd = CUserCMD::new(user_cmd);
 
-    if user_cmd as usize == 0 || cmd.get_command_number() == 0 {
+    if user_cmd as usize == 0 || cmd.get_command_number() == 0 || cmd.get_tickcount() == 0 {
         return original_return_value;
     }
+
+    println!("CUserCMD Address: {:x?}", user_cmd);
 
     println!("command_number: {}\ntick_count: {}\nview_angle: {:?}\n\n\n", cmd.get_command_number(), cmd.get_tickcount(), cmd.get_view_angle());
 
