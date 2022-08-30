@@ -17,3 +17,4 @@ strip = true
 winapi = { version = "0.3", features = ["consoleapi", "libloaderapi", "processthreadsapi", "winuser", "handleapi", "wincon", "memoryapi"] }
 
 [dependencies]
+lazy_static = "1.4.0"
