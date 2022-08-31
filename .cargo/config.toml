@@ -1,2 +1,9 @@
+rustflags = [
+    "-Z", "build-std"
+]
+
 [build]
 target = "i686-pc-windows-msvc"
+
+[rust]
+channel = "dev"
