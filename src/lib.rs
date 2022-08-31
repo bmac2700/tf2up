@@ -13,6 +13,8 @@ use winapi::{
 };
 
 mod cheat;
+mod classes;
+mod hooked_functions;
 mod hooks;
 mod interfaces;
 mod math;
