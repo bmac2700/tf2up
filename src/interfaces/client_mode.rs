@@ -3,6 +3,7 @@ pub struct IClientMode {
     pub interface_address: usize,
 }
 
+#[allow(dead_code)]
 impl IClientMode {
     pub fn new(base_client_address: *const u8) -> Self {
         const INDEX: usize = 10;

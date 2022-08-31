@@ -5,6 +5,7 @@ use crate::interfaces::{
 };
 
 use crate::hooked_functions::create_move::create_move_hook;
+use crate::netvars;
 
 #[derive(Debug, Clone, Copy, Default)]
 pub struct GlobalData {
@@ -38,6 +39,9 @@ pub fn start() {
 
     global_data.client_mode_interface =
         IClientMode::new(global_data.base_client_interface.interface_address as *const u8);
+
+    println!("{:x?}", global_data.base_client_interface.get_all_classes());
+    netvars::setup_netvars(global_data.base_client_interface.get_all_classes());
 
     unsafe {
         global_data.create_move_hook = hook_x86(

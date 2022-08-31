@@ -5,6 +5,7 @@ pub struct IEngineClient {
     pub interface_address: usize,
 }
 
+#[allow(dead_code)]
 impl IEngineClient {
     pub fn new(pinterface_address: *const u8) -> Self {
         Self {

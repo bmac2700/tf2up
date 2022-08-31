@@ -19,11 +19,7 @@ pub extern "thiscall" fn create_move_hook(
         return original_return_value;
     }
 
-    let mut x = cmd.get_view_angle();
-    x.x = 0f32;
-    x.y = 0f32;
-
-    cmd.set_view_angle(x);
+    cmd.set_forward_move(450f32);
 
     return false;
 }

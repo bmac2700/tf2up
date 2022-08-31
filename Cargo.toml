@@ -18,3 +18,4 @@ winapi = { version = "0.3", features = ["consoleapi", "libloaderapi", "processth
 
 [dependencies]
 lazy_static = "1.4.0"
+paste = "1.0.9"

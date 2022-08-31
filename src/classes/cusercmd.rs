@@ -2,7 +2,13 @@ use crate::math::vector3::Vec3;
 
 #[derive(Debug)]
 pub struct CUserCMD {
-    object_address: *const u8,
+    pub object_address: *const u8,
+}
+
+impl CUserCMD {
+    pub fn new(object_address: *const u8) -> Self {
+        Self { object_address }
+    }
 }
 
 /*command_number: i32,
@@ -29,60 +35,18 @@ mouse_dy: i16,
 has_been_predicted: bool,
 */
 
+use crate::class_member;
+
+#[allow(dead_code)]
 impl CUserCMD {
-    pub fn new(object_address: *const u8) -> Self {
-        Self { object_address }
-    }
+    class_member!(command_number, i32, 0x4);
+    class_member!(tick_count, Vec3, 0x8);
 
-    pub fn get_command_number(&self) -> i32 {
-        let command_number: *const i32 = (self.object_address as usize + 0x4) as _;
-        return unsafe { *command_number };
-    }
+    class_member!(view_angle, Vec3, 0xC);
 
-    pub fn get_tickcount(&self) -> i32 {
-        let tick_count: *const i32 = (self.object_address as usize + 0x8) as _;
-        return unsafe { *tick_count };
-    }
+    class_member!(forward_move, f32, 0x18);
+    class_member!(side_move, f32, 0x1C);
+    class_member!(up_move, f32, 0x20);
 
-    pub fn get_view_angle(&self) -> Vec3 {
-        let view_angle: *const Vec3 = (self.object_address as usize + 0xC) as _;
-        return unsafe { *view_angle };
-    }
-
-    pub fn get_forward_move(&self) -> f32 {
-        let forward_move: *const f32 = (self.object_address as usize + 0x18) as _;
-        return unsafe { *forward_move };
-    }
-
-    pub fn get_side_move(&self) -> f32 {
-        let side_move: *const f32 = (self.object_address as usize + 0x1C) as _;
-        return unsafe { *side_move };
-    }
-
-    pub fn get_up_move(&self) -> f32 {
-        let up_move: *const f32 = (self.object_address as usize + 0x20) as _;
-        return unsafe { *up_move };
-    }
-
-    pub fn get_buttons(&self) -> i32 {
-        let buttons: *const i32 = (self.object_address as usize + 0x24) as _;
-        return unsafe { *buttons };
-    }
-}
-
-impl CUserCMD {
-    pub fn set_command_number(&self, new_command_number: i32) {
-        let command_number: *mut i32 = (self.object_address as usize + 0x4) as _;
-        unsafe { *command_number = new_command_number };
-    }
-
-    pub fn set_tick_count(&self, new_tick_count: i32) {
-        let tick_count: *mut i32 = (self.object_address as usize + 0x8) as _;
-        unsafe { *tick_count = new_tick_count };
-    }
-
-    pub fn set_view_angle(&self, new_view_angle: Vec3) {
-        let view_angle: *mut Vec3 = (self.object_address as usize + 0xC) as _;
-        unsafe { *view_angle = new_view_angle };
-    }
+    class_member!(buttons, i32, 0x24);
 }

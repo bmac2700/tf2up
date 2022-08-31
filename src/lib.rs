@@ -18,6 +18,7 @@ mod hooked_functions;
 mod hooks;
 mod interfaces;
 mod math;
+mod netvars;
 
 unsafe extern "system" fn dllmain_wrapped(module: *mut c_void) -> u32 {
     let res = std::panic::catch_unwind(|| {
