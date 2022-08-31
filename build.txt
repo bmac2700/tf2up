@@ -1,2 +1,0 @@
-cargo +nightly build --release -Z build-std=std,panic_abort //# release
-cargo +nightly build -Z build-std //# debug
