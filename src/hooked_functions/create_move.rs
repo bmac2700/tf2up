@@ -1,6 +1,5 @@
 use crate::classes::cusercmd::CUserCMD;
 
-#[no_mangle]
 pub extern "thiscall" fn create_move_hook(
     caller_class: *const u8,
     input_sample_frametime: f32,
