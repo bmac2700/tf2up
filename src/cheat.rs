@@ -39,7 +39,6 @@ pub fn start() {
     global_data.client_mode_interface =
         IClientMode::new(global_data.base_client_interface.interface_address as *const u8);
 
-
     unsafe {
         global_data.create_move_hook = hook_x86(
             get_virtual(
