@@ -4,7 +4,7 @@ use crate::interfaces::{
     base_client::IBaseClient, client_mode::IClientMode, engine_client::IEngineClient, get_interface,
 };
 
-use crate::hooked_functions::{create_move::create_move_hook, endscene::endscene_hook};
+use crate::hooks::hooked_functions::{create_move::create_move_hook, endscene::endscene_hook};
 use crate::{graphics, netvars};
 
 #[derive(Debug, Clone, Copy, Default)]

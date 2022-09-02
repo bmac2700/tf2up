@@ -8,3 +8,4 @@ pub unsafe fn get_virtual(class: *const u8, index: usize) -> *const u8 {
 }
 
 pub mod detour;
+pub mod hooked_functions;

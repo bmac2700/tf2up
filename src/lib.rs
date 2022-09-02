@@ -15,7 +15,6 @@ use winapi::{
 mod cheat;
 mod classes;
 mod graphics;
-mod hooked_functions;
 mod hooks;
 mod interfaces;
 mod math;
