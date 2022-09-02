@@ -5,7 +5,7 @@ use winapi::{
             D3DCREATE_SOFTWARE_VERTEXPROCESSING, D3D_SDK_VERSION,
         },
         d3d9types::{D3DDEVTYPE_HAL, D3DPRESENT_PARAMETERS, D3DSWAPEFFECT_DISCARD},
-        minwindef::TRUE,
+        minwindef::{TRUE, FALSE},
     },
     um::winuser::GetForegroundWindow,
 };
@@ -33,7 +33,7 @@ pub unsafe fn get_device() -> Option<*mut IDirect3DDevice9> {
         MultiSampleQuality: 0,
         SwapEffect: D3DSWAPEFFECT_DISCARD,
         hDeviceWindow: window,
-        Windowed: TRUE,
+        Windowed: FALSE,
         EnableAutoDepthStencil: 0,
         AutoDepthStencilFormat: 0,
         Flags: 0,
@@ -42,7 +42,7 @@ pub unsafe fn get_device() -> Option<*mut IDirect3DDevice9> {
     };
 
     let d3d9_device: *mut IDirect3DDevice9 = std::ptr::null_mut();
-    let result = (*d3d9).CreateDevice(
+    let mut result = (*d3d9).CreateDevice(
         D3DADAPTER_DEFAULT,
         D3DDEVTYPE_HAL,
         present_params.hDeviceWindow,
@@ -50,6 +50,19 @@ pub unsafe fn get_device() -> Option<*mut IDirect3DDevice9> {
         &mut present_params,
         std::mem::transmute(&d3d9_device),
     );
+
+    if result != 0 {
+        present_params.Windowed = TRUE;
+        
+        result = (*d3d9).CreateDevice(
+            D3DADAPTER_DEFAULT,
+            D3DDEVTYPE_HAL,
+            present_params.hDeviceWindow,
+            D3DCREATE_SOFTWARE_VERTEXPROCESSING,
+            &mut present_params,
+            std::mem::transmute(&d3d9_device),
+        );
+    }
 
     (*d3d9).Release(); //Might not be okay, but in this case we are only interested in the virtual table so it doesnt matter
 
