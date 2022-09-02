@@ -49,12 +49,9 @@ unsafe extern "system" fn dllmain_wrapped(module: *mut c_void) -> u32 {
 #[allow(non_snake_case)]
 #[no_mangle]
 pub unsafe extern "system" fn DllMain(module: HMODULE, reason: DWORD, _: LPVOID) -> BOOL {
-    /* Disable thread calls */
     DisableThreadLibraryCalls(module);
 
-    /* If we're attaching, create a new thread */
     if reason == DLL_PROCESS_ATTACH {
-        /* NOTE: leaking handle here, need to find a way to resolve */
         CloseHandle(CreateThread(
             std::ptr::null_mut(),
             0,
@@ -65,7 +62,6 @@ pub unsafe extern "system" fn DllMain(module: HMODULE, reason: DWORD, _: LPVOID)
         ));
     }
 
-    /* return true always */
     TRUE
 }
 
