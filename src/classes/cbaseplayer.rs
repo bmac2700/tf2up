@@ -17,4 +17,5 @@ use std::collections::HashMap;
 impl CBasePlayer {
     netvar!(health, i32, "CBasePlayer->m_iHealth");
     netvar!(life_state, u8, "CBasePlayer->m_lifeState");
+    netvar!(flags, i32, "CBasePlayer->m_fFlags");
 }

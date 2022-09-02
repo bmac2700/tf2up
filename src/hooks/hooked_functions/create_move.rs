@@ -12,11 +12,13 @@ pub extern "thiscall" fn create_move_hook(
         unsafe { std::mem::transmute(global_data.create_move_hook.clone() as *const u8) };
     let original_return_value = func(caller_class, input_sample_frametime, user_cmd);
 
-    let cmd = CUserCMD::new(user_cmd);
+    let mut cmd = CUserCMD::new(user_cmd);
 
     if user_cmd as usize == 0 || cmd.get_command_number() == 0 {
         return original_return_value;
     }
+
+    crate::modules::movement::bunnyhop::run(&global_data, &mut cmd);
 
     return false;
 }
