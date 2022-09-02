@@ -5,6 +5,7 @@ pub struct CUserCMD {
     pub object_address: *const u8,
 }
 
+#[allow(dead_code)]
 impl CUserCMD {
     pub fn new(object_address: *const u8) -> Self {
         Self { object_address }

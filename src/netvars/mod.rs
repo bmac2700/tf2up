@@ -10,7 +10,12 @@ pub fn netvar_hash(string: &str) -> usize {
     output
 }
 
-fn recursive_dump(base_class: String, recv_table: *const u8, offset: i32, hashmap: &mut HashMap<usize, usize>) {
+fn recursive_dump(
+    base_class: String,
+    recv_table: *const u8,
+    offset: i32,
+    hashmap: &mut HashMap<usize, usize>,
+) {
     let props_count = unsafe { *((recv_table as usize + 0x4) as *const i32) };
 
     for i in 0..props_count as usize {
@@ -48,7 +53,6 @@ fn recursive_dump(base_class: String, recv_table: *const u8, offset: i32, hashma
         );*/
 
         hashmap.insert(netvar_hash(&name), value_offset);
-
     }
 }
 

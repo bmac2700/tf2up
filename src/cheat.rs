@@ -53,7 +53,8 @@ pub fn start() {
     global_data.client_mode_interface =
         IClientMode::new(global_data.base_client_interface.interface_address as *const u8);
 
-    global_data.netvars = netvars::setup_netvars(global_data.base_client_interface.get_all_classes());
+    global_data.netvars =
+        netvars::setup_netvars(global_data.base_client_interface.get_all_classes());
 
     unsafe {
         global_data.create_move_hook = hook_x86(

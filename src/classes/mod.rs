@@ -18,3 +18,17 @@ macro_rules! class_member {
         }
     };
 }
+
+#[macro_export]
+macro_rules! netvar {
+    ($netvar_name:ident, $data_type:ty, $netvar_path:expr) => {
+        paste::paste! {
+            pub fn [<get_ $netvar_name>](&self, netvars: &HashMap<usize, usize>) -> $data_type {
+                let offset = netvars.get(&netvar_hash($netvar_path));
+                let data = (self.object_address as usize + *offset.unwrap()) as *const _;
+
+                return unsafe {*data};
+            }
+        }
+    };
+}

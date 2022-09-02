@@ -1,4 +1,4 @@
-use crate::classes::{cbaseentity::CBaseEntity, cbaseplayer::CBasePlayer, cusercmd::CUserCMD};
+use crate::classes::cusercmd::CUserCMD;
 
 pub extern "thiscall" fn create_move_hook(
     caller_class: *const u8,
@@ -16,17 +16,6 @@ pub extern "thiscall" fn create_move_hook(
 
     if user_cmd as usize == 0 || cmd.get_command_number() == 0 {
         return original_return_value;
-    }
-
-    cmd.set_forward_move(450f32);
-
-    for i in 0..32 {
-        let entity_address = global_data
-            .client_entity_list_interface
-            .get_client_entity(i);
-
-        let player = CBasePlayer::new(entity_address);
-        let base_entity = CBaseEntity::new(entity_address);
     }
 
     return false;
