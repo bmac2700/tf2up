@@ -14,7 +14,7 @@ strip = true
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [target.'cfg(windows)'.dependencies]
-winapi = { version = "0.3", features = ["consoleapi", "libloaderapi", "processthreadsapi", "winuser", "handleapi", "wincon", "memoryapi"] }
+winapi = { version = "0.3", features = ["consoleapi", "libloaderapi", "processthreadsapi", "winuser", "handleapi", "wincon", "memoryapi", "d3d9"] }
 
 [dependencies]
 lazy_static = "1.4.0"

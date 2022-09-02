@@ -4,8 +4,8 @@ use crate::interfaces::{
     base_client::IBaseClient, client_mode::IClientMode, engine_client::IEngineClient, get_interface,
 };
 
-use crate::hooked_functions::create_move::create_move_hook;
-use crate::netvars;
+use crate::hooked_functions::{create_move::create_move_hook, endscene::endscene_hook};
+use crate::{graphics, netvars};
 
 #[derive(Debug, Clone, Copy, Default)]
 pub struct GlobalData {
@@ -15,6 +15,8 @@ pub struct GlobalData {
 
     //hooks
     pub create_move_hook: usize,
+
+    pub endscene_hook: usize,
 }
 
 use std::sync::Mutex;
@@ -53,6 +55,20 @@ pub fn start() {
             create_move_hook as *const u8,
         ) as usize;
     }
+
+    let directx_vtable = unsafe { graphics::directx9::get_directx_vtable() };
+
+    println!("directx vtable: {:x?}", directx_vtable);
+
+    let endscene_address =
+        unsafe { *((directx_vtable as usize + 0xA8) as *const usize) };
+
+    println!("endscene: {:x?}", endscene_address);
+
+    unsafe {
+        global_data.endscene_hook =
+            hook_x86(endscene_address as *const u8, 7, endscene_hook as *const u8) as usize;
+    }
 }
 
 pub fn end() {
@@ -66,6 +82,16 @@ pub fn end() {
             ),
             global_data.create_move_hook as *const u8,
             6,
+        );
+    }
+
+    unsafe {
+        let endscene_address =
+            *((graphics::directx9::get_directx_vtable() as usize + 0xA8) as *const usize);
+        unhook_x86(
+            endscene_address as *const u8,
+            global_data.endscene_hook as *const u8,
+            7,
         );
     }
 }
