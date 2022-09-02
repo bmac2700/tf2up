@@ -5,7 +5,7 @@ use winapi::{
             D3DCREATE_SOFTWARE_VERTEXPROCESSING, D3D_SDK_VERSION,
         },
         d3d9types::{D3DDEVTYPE_HAL, D3DPRESENT_PARAMETERS, D3DSWAPEFFECT_DISCARD},
-        minwindef::{TRUE, FALSE},
+        minwindef::{FALSE, TRUE},
     },
     um::winuser::GetForegroundWindow,
 };
@@ -53,7 +53,7 @@ pub unsafe fn get_device() -> Option<*mut IDirect3DDevice9> {
 
     if result != 0 {
         present_params.Windowed = TRUE;
-        
+
         result = (*d3d9).CreateDevice(
             D3DADAPTER_DEFAULT,
             D3DDEVTYPE_HAL,

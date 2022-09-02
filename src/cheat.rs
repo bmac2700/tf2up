@@ -1,5 +1,6 @@
 use crate::hooks::detour::{hook_x86, unhook_x86};
 use crate::hooks::get_virtual;
+use crate::interfaces::client_entity_list::IClientEntityList;
 use crate::interfaces::{
     base_client::IBaseClient, client_mode::IClientMode, engine_client::IEngineClient, get_interface,
 };
@@ -7,11 +8,16 @@ use crate::interfaces::{
 use crate::hooks::hooked_functions::{create_move::create_move_hook, endscene::endscene_hook};
 use crate::{graphics, netvars};
 
-#[derive(Debug, Clone, Copy, Default)]
+use std::collections::HashMap;
+
+#[derive(Debug, Clone, Default)]
 pub struct GlobalData {
+    pub netvars: HashMap<usize, usize>,
+
     pub base_client_interface: IBaseClient,
     pub engine_client_interface: IEngineClient,
     pub client_mode_interface: IClientMode,
+    pub client_entity_list_interface: IClientEntityList,
 
     //hooks
     pub create_move_hook: usize,
@@ -27,7 +33,7 @@ lazy_static::lazy_static! {
 pub fn get_global_data() -> GlobalData {
     let global_data = GLOBAL_DATA.lock().unwrap();
 
-    return *global_data;
+    return global_data.clone();
 }
 
 pub fn start() {
@@ -39,11 +45,15 @@ pub fn start() {
     global_data.engine_client_interface =
         IEngineClient::new(get_interface("engine.dll".into(), "VEngineClient014".into()) as _);
 
+    global_data.client_entity_list_interface = IClientEntityList::new(get_interface(
+        "client.dll".into(),
+        "VClientEntityList003".into(),
+    ) as _);
+
     global_data.client_mode_interface =
         IClientMode::new(global_data.base_client_interface.interface_address as *const u8);
 
-    println!("{:x?}", global_data.base_client_interface.get_all_classes());
-    netvars::setup_netvars(global_data.base_client_interface.get_all_classes());
+    global_data.netvars = netvars::setup_netvars(global_data.base_client_interface.get_all_classes());
 
     unsafe {
         global_data.create_move_hook = hook_x86(
@@ -60,8 +70,7 @@ pub fn start() {
 
     println!("directx vtable: {:x?}", directx_vtable);
 
-    let endscene_address =
-        unsafe { *((directx_vtable as usize + 0xA8) as *const usize) };
+    let endscene_address = unsafe { *((directx_vtable as usize + 0xA8) as *const usize) };
 
     println!("endscene: {:x?}", endscene_address);
 

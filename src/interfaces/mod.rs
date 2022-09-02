@@ -22,5 +22,6 @@ pub fn get_interface(module_name: String, interface_name: String) -> *const u8 {
 }
 
 pub mod base_client;
+pub mod client_entity_list;
 pub mod client_mode;
 pub mod engine_client;

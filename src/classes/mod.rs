@@ -1,3 +1,5 @@
+pub mod cbaseentity;
+pub mod cbaseplayer;
 pub mod cusercmd;
 
 #[macro_export]
