@@ -23,7 +23,8 @@ macro_rules! class_member {
 macro_rules! netvar {
     ($netvar_name:ident, $data_type:ty, $netvar_path:expr) => {
         paste::paste! {
-            pub fn [<get_ $netvar_name>](&self, netvars: &HashMap<usize, usize>) -> $data_type {
+            pub fn [<get_ $netvar_name>](&self/*, netvars: &HashMap<usize, usize>*/) -> $data_type {
+                let netvars = crate::cheat::get_global_data().netvars;
                 let offset = netvars.get(&netvar_hash($netvar_path));
                 let data = (self.object_address as usize + *offset.unwrap()) as *const _;
 

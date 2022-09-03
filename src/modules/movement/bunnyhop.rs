@@ -10,7 +10,7 @@ pub fn run(global_data: &GlobalData, cmd: &mut CUserCMD) {
             .get_client_entity(1),
     );
 
-    if (local_player.get_flags(&global_data.netvars) & (1 << 0)) == 0 {
+    if (local_player.get_flags() & (1 << 0)) == 0 {
         let mut buttons = cmd.get_buttons();
         buttons &= !(1 << 1);
 

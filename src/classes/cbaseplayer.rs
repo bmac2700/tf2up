@@ -11,7 +11,6 @@ impl CBasePlayer {
 }
 
 use crate::{netvar, netvars::netvar_hash};
-use std::collections::HashMap;
 
 #[allow(dead_code)]
 impl CBasePlayer {
