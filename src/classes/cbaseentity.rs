@@ -11,8 +11,6 @@ impl CBaseEntity {
 }
 
 use crate::{math::vector3::Vec3, netvar, netvars::netvar_hash};
-use std::collections::HashMap;
-
 #[allow(dead_code)]
 impl CBaseEntity {
     netvar!(simulation_time, f32, "CBaseEntity->m_flSimulationTime");
