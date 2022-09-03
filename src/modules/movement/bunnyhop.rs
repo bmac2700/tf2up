@@ -1,11 +1,16 @@
-use crate::{cheat::GlobalData, classes::{cusercmd::CUserCMD, cbaseplayer::CBasePlayer}};
+use crate::{
+    cheat::GlobalData,
+    classes::{cbaseplayer::CBasePlayer, cusercmd::CUserCMD},
+};
 
 pub fn run(global_data: &GlobalData, cmd: &mut CUserCMD) {
-
-    let local_player = CBasePlayer::new(global_data.client_entity_list_interface.get_client_entity(1));
+    let local_player = CBasePlayer::new(
+        global_data
+            .client_entity_list_interface
+            .get_client_entity(1),
+    );
 
     if (local_player.get_flags(&global_data.netvars) & (1 << 0)) == 0 {
-        
         let mut buttons = cmd.get_buttons();
         buttons &= !(1 << 1);
 
