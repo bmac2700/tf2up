@@ -1,6 +1,6 @@
 use crate::{
     cheat::GlobalData,
-    classes::{cbaseentity::CBaseEntity, cbaseplayer::CBasePlayer, cusercmd::CUserCMD},
+    classes::{cbaseentity::CBaseEntity, cusercmd::CUserCMD},
 };
 
 const IN_ATTACK: i32 = 1 << 0;
