@@ -1,5 +1,5 @@
 # tf2up
-tf2up is a experiemental Team Fortress 2 utility mod (aka cheat).
+tf2up is an experiemental Team Fortress 2 utility mod (aka cheat).
 
 # Why?
 This project was made to answer one single question: "How hard is it to make a cheat in Rust?", the answer is the following: <br/>
