@@ -26,7 +26,6 @@ pub fn run(global_data: &GlobalData, cmd: &mut CUserCMD) {
 
     // Checks if the JUMP button is being pressed.
     if (cmd.get_buttons() & IN_JUMP) == IN_JUMP {
-
         // Saves the current pressed buttons into a mutable variable
         let mut buttons = cmd.get_buttons();
 
