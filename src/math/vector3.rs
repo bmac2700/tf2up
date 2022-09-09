@@ -1,3 +1,5 @@
+use std::ops::Sub;
+
 use super::deg2rad;
 
 #[derive(Debug, Clone, Copy)]
@@ -43,6 +45,14 @@ impl Vec3 {
         let distance = (delta.x * delta.x + delta.y * delta.y + delta.z * delta.z).sqrt();
 
         distance
+    }
+}
+
+impl Sub for Vec3 {
+    type Output = Vec3;
+
+    fn sub(self, rhs: Self) -> Self::Output {
+        Self {x: self.x - rhs.x, y: self.y - rhs.y, z: self.z - rhs.z}
     }
 }
 

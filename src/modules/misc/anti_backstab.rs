@@ -69,12 +69,18 @@ pub fn run(global_data: &GlobalData, cmd: &mut CUserCMD) {
     if closest_entity_distance < 200.0 {
 
         // Calculate the a view angle where the we look at the closest player
-        let mut view_angle = local_entity
+        let view_angle = local_entity
             .get_origin()
             .calculate_angle(&entity.get_origin());
 
+        let differential = view_angle - cmd.get_view_angle();
+
         // Setting the x value of the view angle to -90 makes backstabbing pretty much impossible, but also scrables your own movement for some reason
-        view_angle.x = -90.0;
+        let mut view_angle = cmd.get_view_angle();
+
+        if (differential.y >= 90.0 && differential.y <= 270.0) || (differential.y <= -90.0 && differential.y >= -255.0) {
+            view_angle.x = -90.0;
+        }
 
         // Set the view angle to our new one
         cmd.set_view_angle(view_angle);
