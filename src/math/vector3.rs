@@ -52,7 +52,11 @@ impl Sub for Vec3 {
     type Output = Vec3;
 
     fn sub(self, rhs: Self) -> Self::Output {
-        Self {x: self.x - rhs.x, y: self.y - rhs.y, z: self.z - rhs.z}
+        Self {
+            x: self.x - rhs.x,
+            y: self.y - rhs.y,
+            z: self.z - rhs.z,
+        }
     }
 }
 

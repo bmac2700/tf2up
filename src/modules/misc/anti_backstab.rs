@@ -6,7 +6,6 @@ use crate::{
 const IN_ATTACK: i32 = 1 << 0;
 
 pub fn run(global_data: &GlobalData, cmd: &mut CUserCMD) {
-
     if (cmd.get_buttons() & IN_ATTACK) == IN_ATTACK {
         return;
     }
@@ -23,7 +22,6 @@ pub fn run(global_data: &GlobalData, cmd: &mut CUserCMD) {
 
     // Loop through every player
     for i in 2..32 {
-
         // Get the entity handle of the player
         let entity = CBaseEntity::new(
             global_data
@@ -67,7 +65,6 @@ pub fn run(global_data: &GlobalData, cmd: &mut CUserCMD) {
 
     // If the closest player is closer than 200 (units ?)
     if closest_entity_distance < 200.0 {
-
         // Calculate the a view angle where the we look at the closest player
         let view_angle = local_entity
             .get_origin()
@@ -78,7 +75,9 @@ pub fn run(global_data: &GlobalData, cmd: &mut CUserCMD) {
         // Setting the x value of the view angle to -90 makes backstabbing pretty much impossible, but also scrables your own movement for some reason
         let mut view_angle = cmd.get_view_angle();
 
-        if (differential.y >= 90.0 && differential.y <= 270.0) || (differential.y <= -90.0 && differential.y >= -255.0) {
+        if (differential.y >= 90.0 && differential.y <= 270.0)
+            || (differential.y <= -90.0 && differential.y >= -255.0)
+        {
             view_angle.x = -90.0;
         }
 
